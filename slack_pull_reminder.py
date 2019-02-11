@@ -87,6 +87,13 @@ def is_mergeable(pull):
     return line
 
 
+def encode(text):
+    """
+    Replace special symbols as per https://api.slack.com/docs/message-formatting.
+    """
+    return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
 def format_pull_requests(pull_requests, owner, repository):
     lines = []
 
@@ -97,7 +104,7 @@ def format_pull_requests(pull_requests, owner, repository):
             mergeable = is_mergeable(pull)
             age = get_age(pull)
             line = '*[{0}/{1}]* <{2}|{3}> by @{4} • Updated {5}h ago • {6} • Mergeable: {7}'.format(
-                owner, repository, pull.html_url, pull.title, creator, age, review_statuses, mergeable)
+                owner, repository, pull.html_url, encode(pull.title), creator, age, review_statuses, mergeable)
             lines.append(line)
 
     return lines
