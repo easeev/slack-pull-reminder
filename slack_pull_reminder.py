@@ -132,8 +132,6 @@ def send_to_slack(text):
     payload = {
         'token': SLACK_API_TOKEN,
         'channel': SLACK_CHANNEL,
-        'username': 'Pull Request Reminder',
-        'icon_emoji': ':bell:',
         'text': text
     }
 
